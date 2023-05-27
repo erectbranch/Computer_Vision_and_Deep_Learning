@@ -1,0 +1,7 @@
+.DS_Store
+appendix/
+*.log
+
+
+**/.ipynb_checkpoints
+**/*checkpoints/
