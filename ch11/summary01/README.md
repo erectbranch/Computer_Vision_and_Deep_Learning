@@ -88,7 +88,9 @@ self-attention은 프리스비가 다른 위치에 attention하는 정도를 선
 
 > 참고로 2018년 [Non-local Neural Network](https://arxiv.org/abs/1711.07971)에서 CV에 처음 self-attention이 적용되었다. 아래 식을 통해 self-attention을 계산한다.
 
-$$ y_{i} = {{1} \over {C(\mathbf{x})}}{\sum}_{j}{a(\mathbf{x_{i}}, \mathbf{x_{j}})g(\mathbf{x_{j}})} $$
+```math
+y_{i} = {{1} \over {C(\mathbf{x})}}{\sum}_{j}{a(\mathbf{x_{i}}, \mathbf{x_{j}})g(\mathbf{x_{j}})}
+```
 
 ---
 
@@ -242,7 +244,7 @@ $$ = \begin{bmatrix} 2.805 & 1.631 & 4.005 \end{bmatrix} $$
 
 - 예를 들어 time 6에서 decoder는 '저절로'에 주목해야 'itself'를 제대로 출력할 수 있다.
 
-- 그렇다면 $\begin{bmatrix} 0.01 & 0.9 & 0.02 & 0.03 & 0.04 \end{bmatrix}$ 처럼 두 번째 요소('저절로') 값이 큰 attention vector $\mathbf{a}$ 를 생성하면, decoder는 '저절로'에 주목할 수 있게 된다.
+- 그렇다면 [0.01 0.9 0.02 0.03 0.04] 처럼 두 번째 요소('저절로') 값이 큰 attention vector $\mathbf{a}$ 를 생성하면, decoder는 '저절로'에 주목할 수 있게 된다.
 
 이제 이러한 상황에서 query-key-value로 무엇을 사용할지 정해 보자.
 
@@ -260,7 +262,7 @@ $$ \mathbf{K} = \begin{bmatrix} 0.1 & 0.0 & 0.8 \\ 0.1 & 0.9 & 0.0 \\ 0.0 & 0.1 
 
 $$ \mathbf{V} = \begin{bmatrix} 0.1 & 0.0 & 0.8 \\ 0.1 & 0.9 & 0.0 \\ 0.0 & 0.1 & 0.8 \\ 0.2 & 0.1 & 0.6 \\ 0.9 & 0.0 & 0.1 \end{bmatrix} $$
 
-지난 유사도를 구한 뒤 softmax를 적용하여 attention vector를 구한다. 그리고 이를 value와 곱한 후 모두 합산하면 contect vector $\mathbf{c} = \begin{bmatrix} 0.243 & 0.339 & 0.370 \end{bmatrix}$ 을 얻을 수 있다.
+지난 유사도를 구한 뒤 softmax를 적용하여 attention vector를 구한다. 그리고 이를 value와 곱한 후 모두 합산하면 contect vector $\mathbf{c}$ = [0.243 0.339 0.370] 을 얻을 수 있다.
 
 이렇게 구해낸 contect vector는 decoder의 입력 항의 한 자리를 차지하게 된다. 가중치 ${\mathbf{U}}^{4}$ 를 곱한 뒤 추가되며, 이 가중치는 학습을 통해서 추가로 알아내야 한다.
 

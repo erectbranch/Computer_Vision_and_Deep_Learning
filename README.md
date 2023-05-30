@@ -23,6 +23,11 @@
 
 ## 🚩 정리한 문서 목록
 
+ - [attention](https://github.com/erectbranch/Computer_Vision_and_Deep_Learning/tree/master/ch11/summary01)
+
+   > attention, self-attention
+
+   > RNN, LSTM, seq2seq(teacher forcing, auto-regressive), query-key-value
 
 </br>
 
