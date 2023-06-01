@@ -27,7 +27,11 @@
 
    > attention, self-attention
 
-   > RNN, LSTM, seq2seq(teacher forcing, auto-regressive), query-key-value
+   > RNN, LSTM, seq2seq(teacher forcing, auto-regressive), query-key-value, Bahdanau attention
+
+- [Transformer](https://github.com/erectbranch/Computer_Vision_and_Deep_Learning/tree/master/ch11/summary02)
+
+   > word embedding, positional encoding, multi-head attention, feed forward, Masked MHA
 
 </br>
 
