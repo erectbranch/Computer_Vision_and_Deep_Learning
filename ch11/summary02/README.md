@@ -121,7 +121,7 @@ $$ \mathrm{softmax} \left({\mathbf{Q}{\mathbf{K}}^{T}} \over {\sqrt{d_{key}}} \r
 
 #### 11.3.2.3 multi-head attention
 
-MHA는 여러 개의 head를 가진다고 했다. 이러한 각 head는 고유한 변환 행렬 ${\mathbf{W}_{i}}^{Q}$ , ${\mathbf{W}_{i}}^{K}$ , ${\mathbf{W}_{i}}^{V}$ 를 가지고 self-attention을 독립적으로 수행하게 된다.
+MHA는 여러 개의 head를 가진다고 했다. 이러한 각 head는 고유한 변환 행렬 ${\mathbf{W_{i}^{Q}}}$ , ${\mathbf{W_{i}^{K}}}$ , ${\mathbf{W_{i}}^{V}}$ 를 가지고 self-attention을 독립적으로 수행하게 된다.
 
 - 이후 각 head의 결과를 concate 최종 결과를 얻는다.
 
@@ -133,7 +133,7 @@ $$ \mathbf{C} = \mathrm{Concatenate}(C_{1}, C_{2}, \cdots , C_{h})W^{O} $$
 
 ![multi-head attention concat](images/multi-head_concat.png)
 
-$W_{O}$ 행렬을 $4 \times 4$ 크기로 가정하고 위 $\mathrm{Concatenate}({\mathbf{C}}_{1}$ , ${\mathbf{C}}_{2})$ 에 곱하면 최종 출력(output feature map) $\mathbf{C}$ 를 얻을 수 있다.
+$W_{O}$ 행렬을 $4 \times 4$ 크기로 가정하고 위 $\mathrm{Concatenate}({\mathbf{C_{1}}}$ , ${\mathbf{C_{2}}})$ 에 곱하면 최종 출력(output feature map) $\mathbf{C}$ 를 얻을 수 있다.
 
 ![multi-head attention output](images/multi-head_output.png)
 
@@ -165,7 +165,7 @@ FF layer(position-wise FeedForward layer)는 MHA layer의 output $\mathbf{X}'$ �
 \mathbf{X}'' = \mathrm{FFN}(\mathbf{X}') = \mathrm{ReLU}(\mathbf{X}'{\mathbf{W}}_{1} + {\mathbf{b}}_{1}){\mathbf{W}}_{2} + {\mathbf{b}}_{2}
 ```
 
-- ${\mathbf{W}}_{1}$ , ${\mathbf{W}}_{2}$ 는 학습으로 알아낸다.
+- ${\mathbf{W_{1}}}$ , ${\mathbf{W_{2}}}$ 는 학습으로 알아낸다.
 
 > 행렬 연산인 만큼, 각 행에 $d_{ff}$ 차원의 벡터가 곱해지게 된다. 첫 input부터 크기가 보존된 만큼 단어 각각에 벡터가 곱해지는 것으로 이해할 수 있다.
 
@@ -221,11 +221,11 @@ $$ {\mathbf{Q}{\mathbf{K}}^{T}} \over {\sqrt{d_{key}}} $$
 
 > 11.3.1절 그림의 3번에 해당된다.
 
-encoder와 decoder가 상호작용하는 layer이므로, ${\mathbf{X}}_{enc}$ 과 ${\mathbf{X}}_{dec}$ 행렬을 사용하게 된다.
+encoder와 decoder가 상호작용하는 layer이므로, ${\mathbf{X_{enc}}}$ 과 ${\mathbf{X_{dec}}}$ 행렬을 사용하게 된다.
 
-- query: ${\mathbf{X}}_{dec}$
+- query: ${\mathbf{X_{dec}}}$
 
-- key-value: ${\mathbf{X}}_{enc}$
+- key-value: ${\mathbf{X_{enc}}}$
 
 이를 식으로 표현하면 다음과 같다.
 
@@ -235,7 +235,7 @@ $$ \mathbf{C} = \mathrm{Concatenate}(C_{1}, C_{2}, \cdots , C_{h})W^{O} $$
 {\mathbf{C}}_{i} = \mathrm{softmax} \left({{\mathbf{Q}}_{i}{{\mathbf{K}}_{i}}^{T}} \over {\sqrt{d_{key}}} \right) {\mathbf{V}}_{i}
 ```
 
-- ${\mathbf{Q}}_{i} = {\mathbf{X}}_{dec}{{\mathbf{W}}_{i}}^{Q}$ , ${\mathbf{K}}_{i} = {\mathbf{X}}_{enc}{{\mathbf{W}}_{i}}^{K}$ , ${\mathbf{V}}_{i} = {\mathbf{X}}_{enc}{{\mathbf{W}}_{i}}^{V}$ ( $i = 1, 2, \cdots , h$ )
+- ${\mathbf{Q_{i}}} = {\mathbf{X_{dec}}}{{\mathbf{W_{i}}}}^{Q}$ , ${\mathbf{K_{i}}} = {\mathbf{X_{enc}}}{\mathbf{W_{i}^{K}}}$ , ${\mathbf{V_{i}}} = {\mathbf{X_{enc}}}{\mathbf{W_{i}^{V}}}$ ( $i = 1, 2, \cdots , h$ )
 
 ---
 
