@@ -1,5 +1,7 @@
 # 10 동적 비전
 
+> [CS231M Mobile Computer Vision Lecture 7: Optical flow and tracking](https://web.stanford.edu/class/cs231m/lectures/lecture-7-optical-flow.pdf)
+
 사람의 시각은 '움직임'을 매 순간 파악할 수 있는 동적 비전이다.
 
 - **video**(비디오)는 시간 순서에 따라 정지 영상을 나열한 구조다. 이를 **dynamic image**(동영상)이라고 부른다.
@@ -37,6 +39,8 @@ $$ d(j, i, t) = |f(j, i, 0) - f(j, i, t)| $$
 ---
 
 ### 10.1.1 motion vector와 optical flow
+
+> [옵티컬 플로우 (Optical Flow) 알아보기](https://gaussian37.github.io/vision-concept-optical_flow/)
 
 > [Optical flow and scene flow estimation: A survey(June 2021)](https://ui.adsabs.harvard.edu/abs/2021PatRe.11407861Z/abstract)
 
@@ -132,7 +136,7 @@ $$ \mathrm{u} = \mathrm{u_{n}} + \mathrm{u_{p}} $$
 
 - $\mathrm{u_{p}}$ : constraint line에 평행한 성분(parallel flow)
 
-normal flow의 direction과 magnitude를 구해보자.
+normal flow의 direction과 magnitude를 구해보자. constraint line과 수직하기 때문에 다음 식을 통해 구할 수 있다.
 
 - direction
 
@@ -143,5 +147,89 @@ $$ \hat{\mathrm{u_{n}}} = {{(I_{x}, I_{y})} \over {\sqrt{{I_{x}}^{2}+{I_{y}}^{2}
 $$ |\mathrm{u_{n}}| = {{|I_{t}|} \over {({I_{x}}^{2}+{I_{y}}^{2})}}(I_{x}, I_{y}) $$
 
 하지만 parallel flow의 경우 constraint line에 평행하기 때문에 구할 수 없다.
+
+---
+
+#### 10.1.1.2 Lucas-Kanade Solution
+
+앞서 광류 방정식이 유일한 해를 확정하지 못했다. 하지만 **Lukas-Kanade Solution**(1981)은 영상이 아주 많은 pixel로 구성된다는 점을 이용해, 이웃 pixel간의 관계를 활용하여 광류 방정식의 상당히 정확한 해를 구한다.
+
+Lukas-Kanade Solution은 다음과 같은 가정을 한다.
+
+- 특정 pixel은 small window $W$ 내 neighborhood pixel과 유사한 optical flow $(u, v)$ 를 갖는다.
+
+  > 지역 조건(local condition)이라고 한다.
+
+    ![Lucas-Kanade neighborhood](images/Lucas-Kanade_neighborhood.png)
+
+    ![Lucas-Kanade assumption](images/Lucas-Kanade.png)
+
+이 가정에 따라서 다음 공식이 성립한다.
+
+- 모든 점 $(k, l) \in W$ 에서 다음 방정식이 성립한다.
+
+$$ I_{x}(k, l)u + I_{y}(k, l)v + I_{t}(k, l) = 0 $$
+
+window의 크기를 $n \times n$ 으로 두면 $n^{2}$ 개의 방정식이 생기게 된다. 이를 행렬로 나타내면 다음과 같다.
+
+$$ \begin{bmatrix} I_{x}(1,1) & I_{y}(1,1) \\ I_{x}(k,l) & I_{y}(k,l) \\ I_{x}(n,n) & I_{y}(n,n) \end{bmatrix} \begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix} I_{t}(1,1) \\ I_{u}(k, l) \\ \vdots \\ I_{t}(n, n) \end{bmatrix} $$
+
+각 행렬을 간단하게 $A \mathrm{u} = B$ 라고 하자.
+
+- $A$ : $n^{2} \times 2$ 행렬
+
+- $\mathrm{u}$ : $2 \times 1$ 행렬
+
+- $B$ : $n^{2} \times 1$ 행렬
+
+여기서 Least-Squares Solution를 통해 $\mathrm{u}$ 를 구해보자.
+
+$$ A \mathrm{u} = B $$
+
+$$ A^{T}A \mathrm{u} = A^{T}B $$
+
+> Least-Squares using pseudo-inverse
+
+$$ \mathrm{u} = (A^{T}A)^{-1}A^{T}B $$
+
+이러한 풀이를 위해서는 두 가지 가정이 필요하다.
+
+- $A^{T}A$ 는 invertible하다. ( 즉, $\det (A^{T}A) \neq 0$ )
+
+- $A^{T}A$ 는 well-conditioned하다.
+
+   - ${\lambda}_{1}$ 과 ${\lambda}_{2}$ 가 $A^{T}A$ 의 eigen value라고 하면 다음 두 조건을 만족한다.
+
+   - ${\lambda}_{1} > \epsilon$ and ${\lambda}_{2} > \epsilon$
+
+   - ${\lambda}_{1} \ge {\lambda}_{2}$ but not ${\lambda}_{1} >>> {\lambda}_{2}$
+
+다음과 같은 textured region을 보면 위 조건을 잘 만족(well-conditioned)하는 것을 알 수 있다.
+
+![textured region](images/textured_region.png)
+
+문제는 이러한 가정을 만족하지 못하는 조건이 있다.
+
+- smooth region
+
+  ![smooth region](images/smooth_regions.png)
+
+- edge
+
+  ![edge](images/edge.png)
+
+---
+
+#### 10.1.1.3 aperture problem
+
+하지만 Lucas-Kanade Solution은 좁은 window에서 연산을 하기 때문에, window보다 큰 움직임이 발생한다면 이를 계산하지 못한다.(**aliasing**이 발생한다.)
+
+또한 **aperture problem** 문제를 해결하지 못한다. 아래는 aperture problem의 예시이다.
+
+> aperture란 작은 구멍을 의미한다.
+
+![aperture problem example](images/aperture_problem_1.png)
+
+![aperture problem example](images/aperture_problem_2.png)
 
 ---
