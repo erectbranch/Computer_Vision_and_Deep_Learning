@@ -172,7 +172,9 @@ $$ I_{x}(k, l)u + I_{y}(k, l)v + I_{t}(k, l) = 0 $$
 
 window의 크기를 $n \times n$ 으로 두면 $n^{2}$ 개의 방정식이 생기게 된다. 이를 행렬로 나타내면 다음과 같다.
 
-$$ \begin{bmatrix} I_{x}(1,1) & I_{y}(1,1) \\ I_{x}(k,l) & I_{y}(k,l) \\ I_{x}(n,n) & I_{y}(n,n) \end{bmatrix} \begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix} I_{t}(1,1) \\ I_{u}(k, l) \\ \vdots \\ I_{t}(n, n) \end{bmatrix} $$
+```math
+\begin{bmatrix} I_{x}(1,1) & I_{y}(1,1) \\ I_{x}(k,l) & I_{y}(k,l) \\ I_{x}(n,n) & I_{y}(n,n) \end{bmatrix} \begin{bmatrix} u \\ v \end{bmatrix} = \begin{bmatrix} I_{t}(1,1) \\ I_{u}(k, l) \\ \vdots \\ I_{t}(n, n) \end{bmatrix}
+```
 
 각 행렬을 간단하게 $A \mathrm{u} = B$ 라고 하자.
 
@@ -198,11 +200,11 @@ $$ \mathrm{u} = (A^{T}A)^{-1}A^{T}B $$
 
 - $A^{T}A$ 는 well-conditioned하다.
 
-   - ${\lambda}_{1}$ 과 ${\lambda}_{2}$ 가 $A^{T}A$ 의 eigen value라고 하면 다음 두 조건을 만족한다.
+   - $A^{T}A$ 의 eigen value ${\lambda}$ 는 다음 두 조건을 만족한다.
 
-   - ${\lambda}_{1} > \epsilon$ and ${\lambda}_{2} > \epsilon$
+$${\lambda}_{1} > \epsilon , {\lambda}_{2} > \epsilon$$
 
-   - ${\lambda}_{1} \ge {\lambda}_{2}$ but not ${\lambda}_{1} >>> {\lambda}_{2}$
+$${\lambda}_{1} \ge {\lambda}_{2}, but \, not \, {\lambda}_{1} >>> {\lambda}_{2}$$
 
 다음과 같은 textured region을 보면 위 조건을 잘 만족(well-conditioned)하는 것을 알 수 있다.
 
