@@ -52,7 +52,9 @@ $$ [R, G, B, x, y, d, ...] $$
 
 - $f_i$ , $f_j$  L2 Distance: 각 픽셀별 차이를 제곱한 값을 모두 합산한 뒤 루트를 씌운다.
 
-$$ S(f_i, f_j) = \sqrt{{\sum}_{k}{(f_{ik} - f_{jk})}^{2}} $$
+```math
+S(f_i, f_j) = \sqrt{{\sum}_{k}{(f_{ik} - f_{jk})}^{2}}
+```
 
 ---
 
