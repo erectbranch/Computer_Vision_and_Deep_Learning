@@ -202,9 +202,13 @@ $$ \mathrm{u} = (A^{T}A)^{-1}A^{T}B $$
 
    - $A^{T}A$ 의 eigen value ${\lambda}$ 는 다음 두 조건을 만족한다.
 
-$${\lambda}_{1} > \epsilon , {\lambda}_{2} > \epsilon$$
+```math
+{\lambda}_{1} > \epsilon , {\lambda}_{2} > \epsilon
+```
 
-$${\lambda}_{1} \ge {\lambda}_{2}, but \, not \, {\lambda}_{1} >>> {\lambda}_{2}$$
+```math
+{\lambda}_{1} \ge {\lambda}_{2}, but \, not \, {\lambda}_{1} >>> {\lambda}_{2}
+```
 
 다음과 같은 textured region을 보면 위 조건을 잘 만족(well-conditioned)하는 것을 알 수 있다.
 
