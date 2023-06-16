@@ -23,6 +23,10 @@
 
 ## 🚩 정리한 문서 목록
 
+ - [region segmentation](https://github.com/erectbranch/Computer_Vision_and_Deep_Learning/tree/master/ch04/summary02)
+
+   > K-means clustering, mean shift
+
  - [optical flow](https://github.com/erectbranch/Computer_Vision_and_Deep_Learning/tree/master/ch10/summary01)
 
    > motion vector, optical flow, Lucas-Kanade Solution, aperture problem
